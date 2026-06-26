@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "烘烤检验",
+    "appid": "__UNI__BB37161",
+    "versionName": "1.0.19",
+    "versionCode": 100000019
+  },
+  "android": {
+    "applicationId": "com.topp.bakinginspection",
+    "compileSdk": 35,
+    "buildToolsVersion": "35.0.0",
+    "minSdk": 27,
+    "targetSdk": 35,
+    "gradle": "8.11.1",
+    "androidGradlePlugin": "8.7.3",
+    "kotlinAndroidPlugin": "1.9.10",
+    "jdk": "17"
+  },
+  "modules": [
+    "firstui-uvue",
+    "kux-mlkit-scancode",
+    "kux-request",
+    "kux-request-lite",
+    "kux-request-interceptors",
+    "uni-installApk",
+    "unix-ui",
+    "uts-openSchema",
+    "z-paging-x"
+  ],
+  "dependencies": [
+    "androidx.camera:camera-camera2:1.2.1",
+    "androidx.camera:camera-core:1.2.1",
+    "androidx.camera:camera-lifecycle:1.2.1",
+    "androidx.camera:camera-view:1.2.1",
+    "com.google.mlkit:barcode-scanning:17.2.0",
+    "androidx.constraintlayout:constraintlayout:1.1.0",
+    "androidx.databinding:databinding-runtime:7.4.0",
+    "androidx.recyclerview:recyclerview:1.0.0",
+    "androidx.activity:activity:1.2.0",
+    "androidx.appcompat:appcompat:1.1.0"
+  ]
+}
