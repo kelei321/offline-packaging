@@ -19,16 +19,23 @@ function Check($Message, $ScriptBlock) {
 
 $AppBuild = Join-Path $RootDir "app/build.gradle.kts"
 $RootBuild = Join-Path $RootDir "build.gradle.kts"
-$LibDir = Join-Path $RootDir "app/libs"
-$WwwDir = Join-Path $RootDir "app/src/main/assets/apps/$AppId/www"
-$ControlXml = Join-Path $RootDir "app/src/main/assets/data/dcloud_control.xml"
+$Settings = Join-Path $RootDir "settings.gradle.kts"
+$GradleProperties = Join-Path $RootDir "gradle.properties"
+$PluginDir = Join-Path $RootDir "plugins"
+$SdkLibDir = Join-Path $RootDir "uniappx/libs"
+$WwwDir = Join-Path $RootDir "uniappx/src/main/assets/apps/$AppId"
+$ControlXml = Join-Path $RootDir "uniappx/src/main/assets/data/dcloud_control.xml"
 
 Check "compileSdk = 35" { (Get-Content $AppBuild -Raw) -match 'compileSdk = 35' }
 Check "buildToolsVersion = 35.0.0" { (Get-Content $AppBuild -Raw) -match 'buildToolsVersion = "35.0.0"' }
 Check "AGP = 8.7.3" { (Get-Content $RootBuild -Raw) -match '8.7.3' }
 Check "Kotlin = 1.9.10" { (Get-Content $RootBuild -Raw) -match '1.9.10' }
+Check "Jetifier enabled" { (Get-Content $GradleProperties -Raw) -match 'android.enableJetifier=true' }
+Check "uniappx module included" { (Get-Content $Settings -Raw) -match 'include\(":uniappx"\)' }
+Check "UTS modules included" { ((Get-Content $Settings -Raw) -match 'uts-kux-mlkit-scancode') -and ((Get-Content $Settings -Raw) -match 'uts-uni-installApk') }
+Check "UTS gradle plugins copied" { (Test-Path (Join-Path $PluginDir 'uts-kotlin-compiler-plugin-0.0.1.jar')) -and (Test-Path (Join-Path $PluginDir 'uts-kotlin-gradle-plugin-0.0.1.jar')) }
+Check "DCloud SDK AAR/JAR exists" { (Get-ChildItem $SdkLibDir -File -Include *.aar, *.jar -ErrorAction SilentlyContinue).Count -gt 0 }
 Check "appid control xml" { (Get-Content $ControlXml -Raw) -match $AppId }
-Check "official SDK AAR/JAR exists" { (Get-ChildItem $LibDir -File -Include *.aar, *.jar -ErrorAction SilentlyContinue).Count -gt 0 }
-Check "HBuilderX www resources copied" { (Get-ChildItem $WwwDir -Force | Where-Object { $_.Name -ne "README.md" -and $_.Name -ne ".gitkeep" }).Count -gt 0 }
+Check "HBuilderX app resources copied" { (Get-ChildItem $WwwDir -Force | Where-Object { $_.Name -ne "README.md" -and $_.Name -ne ".gitkeep" }).Count -gt 0 }
 
 exit $Status
