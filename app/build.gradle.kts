@@ -45,6 +45,11 @@ android {
         }
     }
 
+    androidResources {
+        additionalParameters += listOf("--auto-add-overlay")
+        ignoreAssetsPattern = "!.svn:!.git:.*:!CVS:!thumbs.db:!picasa.ini:!*.scc:*~"
+    }
+
     packaging {
         jniLibs.useLegacyPackaging = true
         resources.excludes += setOf("META-INF/DEPENDENCIES", "META-INF/LICENSE", "META-INF/LICENSE.txt", "META-INF/NOTICE", "META-INF/NOTICE.txt", "META-INF/*.kotlin_module")
@@ -52,16 +57,17 @@ android {
 }
 
 dependencies {
+    implementation(project(":uniappx"))
+    implementation(project(":uts-firstui-uvue"))
+    implementation(project(":uts-kux-mlkit-scancode"))
+    implementation(project(":uts-kux-request"))
+    implementation(project(":uts-kux-request-lite"))
+    implementation(project(":uts-kux-request-interceptors"))
+    implementation(project(":uts-uni-installApk"))
+    implementation(project(":uts-unix-ui"))
+    implementation(project(":uts-uts-openSchema"))
+    implementation(project(":uts-z-paging-x"))
+
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
-    implementation("androidx.camera:camera-camera2:1.2.1")
-    implementation("androidx.camera:camera-core:1.2.1")
-    implementation("androidx.camera:camera-lifecycle:1.2.1")
-    implementation("androidx.camera:camera-view:1.2.1")
-    implementation("com.google.mlkit:barcode-scanning:17.2.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.0")
-    implementation("androidx.databinding:databinding-runtime:7.4.0")
-    implementation("androidx.recyclerview:recyclerview:1.0.0")
-    implementation("androidx.activity:activity:1.2.0")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.13.1")
+    implementation(fileTree(mapOf("dir" to "../uniappx/libs", "include" to listOf("*.jar", "*.aar"))))
 }
