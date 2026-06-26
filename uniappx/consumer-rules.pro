@@ -1,0 +1,6 @@
+-keep class io.dcloud.** { *; }
+-keep class uts.sdk.** { *; }
+-keep class uni.** { *; }
+-dontwarn io.dcloud.**
+-dontwarn uts.sdk.**
+-dontwarn uni.**
